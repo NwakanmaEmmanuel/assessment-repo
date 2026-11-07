@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import type { Restaurant } from '../types';
 import { FavoriteButton } from './FavoriteButton';
 import { RestaurantImage } from './RestaurantImage';
@@ -11,7 +12,11 @@ export interface RestaurantCardProps {
 
 const MAX_TAGS = 3;
 
-export function RestaurantCard({ restaurant, onToggleFavorite }: RestaurantCardProps) {
+/**
+ * Memoised: with 200+ cards, typing in the search box or favouriting ONE card must not re-render the rest.
+ * Works because (a) the hook only replaces the changed restaurant object and (b) onToggleFavorite is referentially stable.
+ */
+export const RestaurantCard = memo(function RestaurantCard({ restaurant, onToggleFavorite }: RestaurantCardProps) {
   const { id, name, cuisineType, rating, photoUrl, tags, priceRange, isOpen, isFavorited } = restaurant;
   const visibleTags = tags.slice(0, MAX_TAGS);
   const hiddenCount = tags.length - visibleTags.length;
@@ -46,4 +51,4 @@ export function RestaurantCard({ restaurant, onToggleFavorite }: RestaurantCardP
       </div>
     </article>
   );
-}
+});

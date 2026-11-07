@@ -27,7 +27,7 @@ button, input, select { font: inherit; color: inherit; }
 
 /* Header */
 .header { position: sticky; top: 0; z-index: 20; background: rgba(255, 248, 241, 0.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
-.header-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+.header-inner { display: flex; align-items: center; justify-content: space-between; gap: 10px; height: 64px; }
 .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); font-weight: 800; font-size: 1.2rem; letter-spacing: -0.02em; }
 .brand-mark { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 10px; background: var(--brand); color: #fff; font-size: 0.95rem; }
 .brand-name span { color: var(--brand); }
@@ -44,7 +44,8 @@ button, input, select { font: inherit; color: inherit; }
 .section-head p { color: var(--ink-soft); margin-top: 4px; }
 
 /* Filters */
-.filters { display: grid; grid-template-columns: 1fr; gap: 12px; padding: 16px; margin-bottom: 20px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
+.filters { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; padding: 16px; margin-bottom: 20px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
+@media (max-width: 639px) { .field-search { grid-column: 1 / -1; } .field input, .field select { height: 42px; } }
 @media (min-width: 640px) { .filters { grid-template-columns: repeat(3, 1fr); } .field-search { grid-column: 1 / -1; } }
 @media (min-width: 900px) { .filters { grid-template-columns: 2fr repeat(3, 1fr); } .field-search { grid-column: auto; } }
 .field { display: grid; gap: 6px; }

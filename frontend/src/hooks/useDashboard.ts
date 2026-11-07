@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { fetchDashboard, saveFavorite } from '../services/api';
 import type { PointsTransaction, Restaurant } from '../types';
+import { REDEEM_STEP } from '../utils/points';
 
 export type LoadStatus = 'loading' | 'ready';
 
@@ -86,5 +87,21 @@ export function useDashboard({ forceFail, onFavoriteError }: UseDashboardOptions
     [setFavorite],
   );
 
-  return { status, restaurants, pointsBalance, pointsHistory, toggleFavorite, setPointsBalance, setPointsHistory };
+  /** Redeems one voucher (50 pts). Pure client-side mock: updates balance and appends a REDEEM ledger entry. */
+  const redeemVoucher = useCallback(() => {
+    if (pointsBalance < REDEEM_STEP) return;
+    setPointsBalance(pointsBalance - REDEEM_STEP);
+    setPointsHistory((history) => [
+      ...history,
+      {
+        id: `t${Date.now()}`,
+        type: 'REDEEM',
+        points: -REDEEM_STEP,
+        restaurantName: `Voucher BUKA-DISC-${Math.random().toString(36).slice(2, 6).toUpperCase()}`,
+        createdAt: new Date().toISOString(),
+      },
+    ]);
+  }, [pointsBalance]);
+
+  return { status, restaurants, pointsBalance, pointsHistory, toggleFavorite, redeemVoucher };
 }

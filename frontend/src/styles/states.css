@@ -38,4 +38,4 @@
 .demo-toggle input:checked + .demo-track { background: var(--danger); }
 .demo-toggle input:checked + .demo-track::after { transform: translateX(14px); }
 .demo-toggle input:focus-visible + .demo-track { outline: 3px solid color-mix(in srgb, var(--brand) 55%, white); outline-offset: 2px; }
-@media (max-width: 560px) { .demo-label { display: none; } .nav-link { padding: 8px 10px; } }
+@media (max-width: 560px) { .header-right { gap: 6px; } .demo-label { display: none; } .nav-link { padding: 7px 9px; font-size: 0.85rem; } .brand { font-size: 1.05rem; gap: 8px; } .brand-mark { width: 32px; height: 32px; } }
