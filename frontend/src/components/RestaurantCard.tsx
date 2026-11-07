@@ -1,15 +1,18 @@
 import type { Restaurant } from '../types';
+import { FavoriteButton } from './FavoriteButton';
 import { RestaurantImage } from './RestaurantImage';
 import { StarRating } from './StarRating';
 
 export interface RestaurantCardProps {
   restaurant: Restaurant;
+  /** Receives the restaurant id so a single stable callback can serve every card. */
+  onToggleFavorite: (id: string) => void;
 }
 
 const MAX_TAGS = 3;
 
-export function RestaurantCard({ restaurant }: RestaurantCardProps) {
-  const { name, cuisineType, rating, photoUrl, tags, priceRange, isOpen } = restaurant;
+export function RestaurantCard({ restaurant, onToggleFavorite }: RestaurantCardProps) {
+  const { id, name, cuisineType, rating, photoUrl, tags, priceRange, isOpen, isFavorited } = restaurant;
   const visibleTags = tags.slice(0, MAX_TAGS);
   const hiddenCount = tags.length - visibleTags.length;
 
@@ -17,6 +20,7 @@ export function RestaurantCard({ restaurant }: RestaurantCardProps) {
     <article className="card" aria-label={name}>
       <div className="card-media">
         <RestaurantImage src={photoUrl} alt={name} />
+        <FavoriteButton restaurantName={name} isFavorited={isFavorited} onToggle={() => onToggleFavorite(id)} />
         {isOpen !== undefined && (
           <span className={`status ${isOpen ? 'status-open' : 'status-closed'}`}>{isOpen ? 'Open' : 'Closed'}</span>
         )}
